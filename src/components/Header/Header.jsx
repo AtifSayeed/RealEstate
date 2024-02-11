@@ -1,25 +1,21 @@
 import React, { useState } from "react";
 import "./Header.css";
-import OutsideClickHandler from "react-outside-click-handler";
 import { BiMenuAltRight } from "react-icons/bi";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
-  const getMenuStyles = (menuOpened) => {
-    if (document.documentElement.clientWidth <= 800) {
-      return { right: !menuOpened && "-100%" };
-    }
+
+  // Function to handle toggling of menu
+  const toggleMenu = () => {
+    setMenuOpened(prevState => !prevState);
   };
+
   return (
     <section className="h-wrapper">
       <div className="flexCenter padding innerWidth h-container">
         <img src="./logo.png" alt="" width={100} />
-    <OutsideClickHandler 
-    onOutsideClick={()=>{
-      setMenuOpened(false);
-    }}>
-        <div className="flexCenter h-menu" 
-        style={getMenuStyles(menuOpened)}>
+        {/* Menu for larger screens */}
+        <div className={`h-menu ${menuOpened ? 'open' : ''}`}>
           <a href="">Residencies</a>
           <a href="">Our Value</a>
           <a href="">Contact Us</a>
@@ -28,11 +24,8 @@ const Header = () => {
             <a href="">Contact</a>
           </button>
         </div>
-        </OutsideClickHandler>
-        <div
-          className="menu-icon"
-          onClick={() => setMenuOpened((prev) => !prev)}
-        >
+        {/* Menu icon for mobile */}
+        <div className="menu-icon" onClick={toggleMenu}>
           <BiMenuAltRight size={30} />
         </div>
       </div>
